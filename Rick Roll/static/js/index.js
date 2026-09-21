@@ -172,21 +172,27 @@ function fetchMoreLinks(){
     const viewMoreBtn = document.querySelector('.view-more-btn');
 
     // Adjust based on what the button currently says
-    if (viewMoreBtn.textContent === "Show Fewer Links"){
-        showFewerLinks();
-        viewMoreBtn.textContent = "View More";
-    }
-    else{
-        if (endingIndex >= savedLinks.length){
-            viewMoreBtn.textContent = "Show Fewer Links";
-        }
-        if (startingIndex >= 3) {
-            createLinkRows("show-more-rows", startingIndex, endingIndex);
+    if (viewMoreBtn){
+        if (viewMoreBtn.textContent === "Show Fewer Links"){
+            showFewerLinks();
+            viewMoreBtn.textContent = "View More";
         }
         else{
-            createLinkRows("initial-rows", startingIndex, endingIndex);
+            if (endingIndex >= savedLinks.length){
+                viewMoreBtn.textContent = "Show Fewer Links";
+            }
+            if (startingIndex >= 3) {
+                createLinkRows("show-more-rows", startingIndex, endingIndex);
+            }
+            else{
+                createLinkRows("initial-rows", startingIndex, endingIndex);
+            }
         }
     }
+    else{
+        createLinkRows("initial-rows", startingIndex, endingIndex);
+    }
+
 }
 
 
