@@ -49,15 +49,6 @@ def index(request):
 
 # Rick roll site
 def rickRoll(request, special_code):
-    # This way works, but if 2 ppl use it at the same time it causes errors
-    # data = get_object_or_404(RickRollInfo, code=special_code)
-    # data.views += 1
-    # data.save()
-    
-    # This way is better, uses the F() expression, doesn't run methods in save() in models.py. So won't open the image and waste resources
-    data =  RickRollInfo.objects.filter(code=special_code).update(views=F('views') + 1)
-    data = get_object_or_404(RickRollInfo, code=special_code)
-
     # Getting country data
     ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
     # Handle local testing (127.0.0.1 won't return a country)
@@ -66,15 +57,26 @@ def rickRoll(request, special_code):
     g = GeoIP2()
     country = g.country(ip_address)['country_name'] if ip_address else 'Unknown'
 
-    # Creation click info
-    rick_roll_info = AnalyticData.objects.create(
-        rick_roll = data,
-        referer = request.META.get('HTTP_REFERER') or 'Unknown', 
-        user_device = request.user_agent.device.family or 'Direct URL',
-        user_browser = request.user_agent.browser.family or 'Unknown',
-        user_os = request.user_agent.os.family or 'Unknown',
-        user_country = country
-    )
+    if not request.user_agent.is_bot:
+        # This way works, but if 2 ppl use it at the same time it causes errors
+        # data = get_object_or_404(RickRollInfo, code=special_code)
+        # data.views += 1
+        # data.save()
+        
+        # This way is better, uses the F() expression, doesn't run methods in save() in models.py. So won't open the image and waste resources
+        data =  RickRollInfo.objects.filter(code=special_code).update(views=F('views') + 1)
+        data = get_object_or_404(RickRollInfo, code=special_code)
+        # Creation click info
+        rick_roll_info = AnalyticData.objects.create(
+            rick_roll = data,
+            referer = request.META.get('HTTP_REFERER') or 'Unknown', 
+            user_device = request.user_agent.device.family or 'Direct URL',
+            user_browser = request.user_agent.browser.family or 'Unknown',
+            user_os = request.user_agent.os.family or 'Unknown',
+            user_country = country
+        )
+
+    data = get_object_or_404(RickRollInfo, code=special_code)
 
     context = {
         'data': data
