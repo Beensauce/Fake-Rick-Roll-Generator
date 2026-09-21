@@ -1,0 +1,20 @@
+# Database
+db.sqlite3
+
+# Media uploads
+media/
+
+# Python
+.venv/
+
+# VS Code
+.vscode/
+
+# Secrets
+.env
+
+# pychache
+__pycache__/
+
+# Local environemnt auto generated stuff
+.DS_Store

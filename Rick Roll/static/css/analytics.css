@@ -1,0 +1,233 @@
+#content{
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.analytics-title{
+    margin-top: 5%;
+    text-align: center;
+}
+
+.analytics-container{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.top-graphs{
+    width: 45%;
+    display: flex;
+    flex-direction: wrap;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.chart-container {
+    width: 45% !important;
+    height: auto !important;
+    aspect-ratio: 1; /* Makes them square */
+}
+
+#browserChart{
+    width: 55% !important;
+    height: auto !important;
+    margin: auto;
+    margin-top: 1.5rem;
+}
+
+/* Table edits */
+.clicks-history{
+  margin-top: 1.5rem;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.click-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    margin:auto;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.5rem auto 0;
+}
+
+.pagination a,
+.pagination .current-page {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.pagination a {
+    color: inherit;
+}
+
+.pagination a:hover,
+.pagination .current-page {
+    background-color: #f5f5f5;
+}
+
+/* Preview */
+.preview{
+  width: 50%;
+  height: 25rem;
+  margin-bottom: 1.5rem;
+}
+
+.preview-text{
+  margin-top: 1.5rem;
+}
+
+#simulator{
+  width: 90%;
+  height: 80%;
+  background-color: #1F1F1F;
+  color: #ADADAD;
+  font-family: sans-serif, Arial, Helvetica;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.profile{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.5rem 0 0 0.5rem;
+}
+
+.msg-inside{
+  width: 75%;
+  height: 65%;
+  background-color: #292929;
+  margin-left: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.msg-inside .msg-text{
+  align-self: flex-start;
+  margin-left: 1rem;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.msg-core{
+  background-color: #242424;
+  width: 90%;
+  height: 65%;
+  display: flex;
+  flex-direction: row;
+}
+
+.information{
+  margin-left:1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+
+.title-core{
+  color:white;
+  font-weight: 600;
+  width: 90%;
+  margin-top: 0.5rem !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
+.description-core{
+  color: white;
+  font-size: 0.9rem;
+  margin-top: 0.5rem !important;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.text{
+  margin: 0;
+  padding: 0;
+}
+
+.link-core{
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-img{
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+}
+
+.thumbnail{
+  width: 30%;
+  height:auto;
+  border-radius: 0.5rem 0 0 0.5rem;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+@media (max-width: 930px) {
+  .preview {
+    width: 100%;
+    height: auto;
+  }
+  .preview-text {
+    text-align: center;
+  }
+  
+  #simulator {
+    height: 300px; 
+    padding-bottom: 1.5rem;
+  }
+  .click-table{
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .analytics-container{
+    flex-direction: column;
+  }
+  .top-graphs{
+    width: 100%;
+    flex-direction: row;
+    flex-wrap:balance;
+  }
+  #browserChart{
+    width: 100% !important;
+    height: auto !important;
+    margin: auto;
+    margin-top: 1.5rem;
+  }
+}

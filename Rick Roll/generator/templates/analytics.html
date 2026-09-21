@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>{{ rickRoll.title }} Analytics page</title>
+    <link rel="stylesheet" href="{% static 'css/analytics.css' %}">    
+    <script src="{% static 'js/analytics.js' %}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block content %}
+    <h1 class="analytics-title">{{ rickRoll.title }} Analytics</h1>
+    {% if rickRoll.views %}
+        <p class    ="analytics-text">Total Views: {{ rickRoll.views }}</p>
+    {% else %}
+        <p class="analytics-text">No views yet.</p>
+    {% endif %}
+
+    <div class="preview">
+        <h1 class="preview-text">Preview</h1>
+        <div id="simulator">
+            <div class="profile">
+                <img class="profile-img" src="{% static 'images/DaBao.jpg' %}" alt="Juicy cat">
+                <p><b>Beensauce</b></p>
+            </div>
+            <div class="msg-inside">
+                <a href="{{ absolute_url }}" target="_blank"><p class="msg-text" style="color:#4e6ec1; text-decoration: underline;">{{ absolute_url }}</p></a>
+                <div class="msg-core">
+                    {% if rickRoll.image %}
+                        <img id='image-core' class="thumbnail" src="{{ rickRoll.image.url }}" alt="Thumbnail">
+                    {% else %}
+                        <img id='image-core' class="thumbnail" src="{% static 'images/default_image.jpg' %}" alt="Default Thumbnail">
+                    {% endif %}
+                    <div class="information">
+                        <p id='title-core' class="title-core text">{{ rickRoll.title }}</p>
+                        <p id='description-core' class="description-core text">{{ rickRoll.description }}</p>
+                        <p id='link-core' class="link-core text">{{ absolute_url }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if rickRoll.views %}
+        <div class="analytics-container">
+            <div class="top-graphs">
+                <div class="chart-container">
+                    <canvas id="countryChart"></canvas>                   
+                </div>
+                <div class="chart-container">
+                    <canvas id="deviceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="osChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="refererChart"></canvas>
+                </div>
+            </div>
+            <canvas id="browserChart"></canvas>
+        </div>
+
+        <div class="clicks-history">
+            <table class="click-table">
+                <thead>
+                    <tr>
+                        <th>Number #</th>
+                        <th>Time clickd</th>
+                        <th>Country</th>
+                        <th>Browser</th>
+                        <th>Device</th>
+                        <th>OS</th>
+                        <th>Referer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for click in clickPage %}
+                        <tr>
+                            <td>{{ clickPage.start_index|add:forloop.counter0 }}</td>
+                            <td>{{ click.time_opened }}</td>
+                            <td>{{ click.user_country }}</td>
+                            <td>{{ click.user_browser }}</td>
+                            <td>{{ click.user_device }}</td>
+                            <td>{{ click.user_os }}</td>
+                            <td>{{ click.referer }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if clickPage.paginator.num_pages > 1 %}
+                <nav class="pagination" aria-label="Click history pages">
+                    {% if clickPage.has_previous %}
+                        <a href="?page={{ clickPage.previous_page_number }}" aria-label="Previous page">&laquo; Previous</a>
+                    {% endif %}
+
+                    {% if clickPage.number == 1 %}
+                        <span class="current-page" aria-current="1st page">1</span>
+                        <span>...</span>
+                        <a href="?page={{ clickPage.paginator.num_pages }}">{{ clickPage.paginator.num_pages }}</a>
+                    {% elif clickPage.number == clickPage.paginator.num_pages %}
+                        <a href="?page=1">1</a>
+                        <span class="current-page" aria-current="current page">{{ clickPage.number }}</span>
+                    {% else %}
+                        <a href="?page=1">1</a>
+                        <span class="current-page" aria-current="current page">{{ clickPage.number }}</span>
+                        <span>...</span>
+                        <a href="?page={{ clickPage.paginator.num_pages }}">{{ clickPage.paginator.num_pages }}</a> 
+                    {% endif %}
+
+                    {% if clickPage.has_next %}
+                        <a href="?page={{ clickPage.next_page_number }}" aria-label="Next page">Next &raquo;</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        </div>
+        <script>
+            const colors = [
+                        'rgb(230, 25, 75)',
+                        'rgb(60, 180, 75)',
+                        'rgb(255, 225, 25)',
+                        'rgb(67, 99, 216)',
+                    ];
+            
+            const countryCtx = document.getElementById('countryChart');
+            const deviceCtx = document.getElementById('deviceChart');
+            const browserCtx = document.getElementById('browserChart');
+            const osCtx = document.getElementById('osChart');
+            const refererCtx = document.getElementById('refererChart');
+
+
+            {% comment %} Creating country data {% endcomment %}
+            const countryData = {
+                labels: [
+                    {% for country in countryData %}
+                        '{{ country.user_country }}',
+                    {% endfor %}
+            ],
+                datasets: [{
+                    label: 'Views by Country',
+                    data: [
+                        {% for country in countryData %}
+                            {{ country.count }},
+                        {% endfor %}
+                ],
+                    backgroundColor: colors,
+                    hoverOffset: 4
+                }]
+            }
+            const countryConfig = {
+                type: 'pie',
+                data: countryData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Views by Country'
+                        }
+                    }
+                },
+            };
+
+            {% comment %} Creating device data {% endcomment %}
+            const deviceData = {
+                labels: [
+                    {% for device in deviceData %}
+                        '{{ device.user_device }}',
+                    {% endfor %}
+                ],
+                datasets:[{
+                    label: 'Views by Device',
+                    data: [
+                        {% for device in deviceData %}
+                            {{ device.count }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: colors,
+                    hoverOffset: 4
+                }]
+            }
+            const deviceConfig = {
+                type: 'pie',
+                data: deviceData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Views by Device'
+                        }
+                    }
+                },
+            };
+
+            {% comment %} Creating OS data {% endcomment %}
+            const osData = {
+                labels: [
+                    {% for os in osData %}
+                        '{{ os.user_os }}',
+                    {% endfor %}
+                ],
+                datasets:[{
+                    label: 'Views by Device',
+                    data: [
+                        {% for os in osData %}
+                            {{ os.count }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: colors,
+                    hoverOffset: 4
+                }]
+            }
+            const osConfig = {
+                type: 'pie',
+                data: osData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Views by different operating system'
+                        }
+                    }
+                },
+            };
+
+            {% comment %} Creating referer data {% endcomment %}
+            const refererData = {
+                labels: [
+                    {% for refererInfo in refererData %}
+                        '{{ refererInfo.referer }}',
+                    {% endfor %}
+                ],
+                datasets:[{
+                    label: 'Views by different referer',
+                    data: [
+                        {% for referer in refererData %}
+                            {{ referer.count }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: colors,
+                    hoverOffset: 4
+                }]
+            }
+            const refererConfig = {
+                type: 'pie',
+                data: refererData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Views by Different referer'
+                        }
+                    }
+                },
+            };
+            
+
+            {% comment %} Browser data {% endcomment %}
+            const browserData = {
+                labels: [
+                    {% for browser in browserData %}
+                        '{{ browser.user_browser }}',
+                    {% endfor %}
+                ],
+                datasets:[{
+                    label: 'Views by Browser',
+                    data: [
+                        {% for browser in browserData %}
+                            {{ browser.count }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: colors,
+                    hoverOffset: 4,
+                }]
+            }
+            const browserConfig = {
+                type: 'bar',
+                data: browserData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Views by Browser'
+                        },
+                    }
+                },
+            };
+
+            new Chart(countryCtx, countryConfig)
+            new Chart(deviceCtx, deviceConfig)
+            new Chart(browserCtx, browserConfig)
+            new Chart(osCtx, osConfig)
+            new Chart(refererCtx, refererConfig)
+        </script>
+    {% else %}
+        <p>No analytics data available for this link.</p>
+    {% endif %}
+{% endblock %}

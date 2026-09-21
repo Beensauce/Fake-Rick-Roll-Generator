@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head %}
+    <title>Rick Roll Generator</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">    
+    <script src="{% static 'js/index.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Preview and form -->
+    <div id="top-content">
+        <div id="form">
+            <h1>Custom Rick Roll Generator</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                    <br>
+                <input type="submit">
+            </form>
+        </div>
+        <div class="preview">
+            <h1 class="preview-text">Preview</h1>
+            <div id="simulator">
+                <div class="profile">
+                    <img class="profile-img" src="{% static 'images/DaBao.jpg' %}" alt="Juicy cat">
+                    <p><b>Beensauce</b></p>
+                </div>
+                <div class="msg-inside">
+                    <p class="msg-text" style="color:#4e6ec1; text-decoration: underline;">Link-created-later.com</p>
+                    <div class="msg-core">
+                        <img id='image-core' class="thumbnail" src="{% static 'images/default_image.jpg' %}" alt="Default Thumbnail">
+                        <div class="information">
+                            <p id='title-core' class="title-core text">Title</p>
+                            <p id='description-core' class="description-core text">Description...</p>
+                            <p id='link-core' class="link-core text">Link-created-later.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link History -->
+    <div id="link-history">
+        {% if rick_roll_data %}
+            <h2>Link Created Just now: </h2>
+                <a href="{{ rick_roll_data.link }}" id="new-link"
+                    data-title="{{ rick_roll_data.title }}"
+                    data-description="{{ rick_roll_data.description }}"
+                    data-image="{{ rick_roll_data.image }}"
+                    data-code="{{ rick_roll_data.code }}"
+                >
+                {{ rick_roll_data.link }}
+            </a>
+        {% endif %}
+
+        <h2>Your Links (Scroll if needed)</h2>
+    </div>
+{% endblock %}

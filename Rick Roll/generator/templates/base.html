@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% comment %} Head content {% endcomment %}
+    {% block head %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    {% block favicon %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon_io/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon_io/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon_io/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}">
+    {% endblock %}
+</head>
+
+<body>
+    {% comment %} Check messages {% endcomment %}
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    {% comment %} content block {% endcomment %}
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer><p>Made by <a href="https://github.com/Beensauce" target="_blank">Beensauce</a></p></footer>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    {% comment %} Troll content {% endcomment %}
+    <meta property="og:title" content="{{ data.title }}">
+    <meta property="og:description" content="{{ data.description }}">
+    <meta property="og:url" content="{{ data.link }}">
+    <meta property="og:type" content="website">
+
+    {% comment %} Troll for twitter {% endcomment %}
+    <meta name="twitter:title" content="{{ data.title }}">
+    <meta name="twitter:description" content="{{ data.description }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    {% if data.image %}
+        <meta property="og:image" content="{{ data.image.url }}">
+        <meta name="twitter:image" content="{{ data.image.url }}">
+    {% endif %}
+
+    <title>{{ data.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/fake.css' %}">   
+    <script src="{% static 'js/fake-link.js' %}" defer></script>
+{% endblock %} 
+
+{% block favicon%}
+{% endblock %}
+
+{% block content%}
+    <div style="padding-top: 1.5rem !important; flex-grow: 1;">
+        <div id="security" class="content">
+            <h1 class="fake-robot-text">Please wait while we confirm you are not a robot</h1>
+            <div class="hidden security-check-container">
+                <h1>Security check - Are you a robot?</h1>
+                <p>Click the bean sauce</p>
+                <ul>
+                    <li><div role="button" class="button" tabindex="0"><img src="{% static 'images/Heinz_Beanz.jpg' %}" alt="secuirty bean"></div></li>
+                    <li><div role="button" class="button" tabindex="0"><img src="{% static 'images/magurie.png' %}" alt="security maguire"></div></li>
+                    <li><div role="button" class="button" tabindex="0"><img src="{% static 'images/RedDot_Burger.jpg' %}" alt="security burger"></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="troll" class="hidden content">
+            <h1>Get RICKED! Views: {{ data.views }}</h1>
+            {% if data.custom_message %}
+                <p>Custom message: {{ data.custom_message }}</p>
+            {% else %}
+                <p>HA, get ricked 😎</p> 
+            {% endif %}
+            <div id="player"></div>
+            <p>Create your own <a href="{% url 'index' %}">here</a></p>
+            <p>Security images by: </p>
+            <ul>
+                <li>Bean sauce: <a href="https://bit.ly/4kLAOes">https://bit.ly/4kLAOes</a></li>
+                <li>Harry Maguire: <a href="https://bit.ly/3MGRpUb">https://bit.ly/3MGRpUb</a></li>
+                <li>Juicy Burger: <a href="https://bit.ly/3MGLeQa">https://bit.ly/3MGLeQa</a></li>
+                <li><a href='https://db-ip.com'>IP Geolocation by DB-IP</a>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
