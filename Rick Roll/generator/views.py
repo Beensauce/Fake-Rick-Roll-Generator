@@ -1,6 +1,7 @@
 from django.db.models import F
 from django.db.models.aggregates import Count
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import RickRollForm
 from .models import RickRollInfo, AnalyticData
@@ -49,6 +50,15 @@ def index(request):
 
 # Rick roll site
 def rickRoll(request, special_code):
+    data = get_object_or_404(RickRollInfo, code=special_code)
+    data.views = data.views + 1
+    context = {
+        'data': data
+    }
+    return render (request, 'fake-link.html', context)
+
+@ratelimit(key='ip', rate='600/h')
+def vertify_click(request, special_code):
     # Getting country data
     ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
     # Handle local testing (127.0.0.1 won't return a country)
@@ -75,14 +85,7 @@ def rickRoll(request, special_code):
             user_os = request.user_agent.os.family or 'Unknown',
             user_country = country
         )
-
-    data = get_object_or_404(RickRollInfo, code=special_code)
-
-    context = {
-        'data': data
-    }
-
-    return render (request, 'fake-link.html', context)
+    return JsonResponse({'status': 'okay'})
 
 
 # Analytics view

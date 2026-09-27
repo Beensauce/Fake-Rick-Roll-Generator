@@ -59,4 +59,19 @@
             </ul>
         </div>
     </div>
+
+    <script>
+        function playVideo(){
+            // Changing styles
+            fetch("{% url 'human-verify' data.code %}")
+            securityCheck.classList.toggle('hidden');
+            troll.classList.toggle('hidden');
+            troll.style.display = 'flex';
+            content.style.paddingTop = '0';
+            footer.classList.toggle('hidden');
+
+            // Play video
+            player.playVideo();
+        } 
+    </script>
 {% endblock %}

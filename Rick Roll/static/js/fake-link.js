@@ -54,18 +54,6 @@ const content = document.getElementById('content');
 // Adding event listeners to all buttons, when one gets clicks, rick roll plays
 btns.forEach((btn) => btn.addEventListener('click', playVideo));
 
-function playVideo(){
-    // Changing styles
-    securityCheck.classList.toggle('hidden');
-    troll.classList.toggle('hidden');
-    troll.style.display = 'flex';
-    content.style.paddingTop = '0';
-    footer.classList.toggle('hidden');
-
-    // Play video
-    player.playVideo();
-} 
-
 // Initial fake loading screen
 const fakeText = document.querySelector('.fake-robot-text');
 const securityCheckContainer = document.querySelector('.security-check-container');
