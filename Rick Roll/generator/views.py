@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import F
 from django.db.models.aggregates import Count
 from django.core.paginator import Paginator
@@ -8,6 +10,7 @@ from .models import RickRollInfo, AnalyticData
 from django.contrib import messages
 from django.contrib.gis.geoip2 import GeoIP2
 from django_ratelimit.decorators import ratelimit
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 # Create your views here.
 
@@ -52,6 +55,7 @@ def index(request):
 def rickRoll(request, special_code):
     data = get_object_or_404(RickRollInfo, code=special_code)
     data.views = data.views + 1
+
     context = {
         'data': data
     }
@@ -74,12 +78,20 @@ def vertify_click(request, special_code):
         # data.save()
         
         # This way is better, uses the F() expression, doesn't run methods in save() in models.py. So won't open the image and waste resources
-        data =  RickRollInfo.objects.filter(code=special_code).update(views=F('views') + 1)
+        RickRollInfo.objects.filter(code=special_code).update(views=F('views') + 1)
         data = get_object_or_404(RickRollInfo, code=special_code)
+
+        if request.body:
+            try:
+                body_data = json.loads(request.body)
+            except:
+                pass
+
+
         # Creation click info
         rick_roll_info = AnalyticData.objects.create(
             rick_roll = data,
-            referer = request.META.get('HTTP_REFERER') or 'Unknown', 
+            referer = body_data.get('original_referer') or 'Unknown/Direct URL', 
             user_device = request.user_agent.device.family or 'Direct URL',
             user_browser = request.user_agent.browser.family or 'Unknown',
             user_os = request.user_agent.os.family or 'Unknown',

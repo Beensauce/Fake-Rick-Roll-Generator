@@ -17,6 +17,8 @@
         <meta property="og:image" content="{{ data.image.url }}">
         <meta name="twitter:image" content="{{ data.image.url }}">
     {% endif %}
+    
+    <meta name="csrf-token" content="{{ csrf_token }}">
 
     <title>{{ data.title }}</title>
     <link rel="stylesheet" href="{% static 'css/fake.css' %}">   
@@ -42,7 +44,7 @@
         </div>
 
         <div id="troll" class="hidden content">
-            <h1>Get RICKED! Views: {{ data.views }}</h1>
+            <h1>Get RICKED! Views: {{ data.views| add:1 }}</h1>
             {% if data.custom_message %}
                 <p>Custom message: {{ data.custom_message }}</p>
             {% else %}
@@ -63,7 +65,19 @@
     <script>
         function playVideo(){
             // Changing styles
-            fetch("{% url 'human-verify' data.code %}")
+            fetch("{% url 'human-verify' data.code %}", 
+            {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(
+                    {
+                        original_referer: document.referrer || 'Direct/Unknown'
+                    }
+                ) 
+            });
+
             securityCheck.classList.toggle('hidden');
             troll.classList.toggle('hidden');
             troll.style.display = 'flex';
