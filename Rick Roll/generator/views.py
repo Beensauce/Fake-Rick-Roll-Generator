@@ -10,7 +10,7 @@ from .models import RickRollInfo, AnalyticData
 from django.contrib import messages
 from django.contrib.gis.geoip2 import GeoIP2
 from django_ratelimit.decorators import ratelimit
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -62,6 +62,7 @@ def rickRoll(request, special_code):
     return render (request, 'fake-link.html', context)
 
 @ratelimit(key='ip', rate='600/h')
+@require_POST
 def vertify_click(request, special_code):
     # Getting country data
     ip_address = request.META.get('HTTP_X_FORWARDED_FOR')

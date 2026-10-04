@@ -1,7 +1,7 @@
 import secrets
 from django.urls import reverse
 from django.db import models
-from PIL import Image
+from PIL import Image, ImageOps
 from django.utils.text import slugify
 
 # Create your models here.
@@ -29,11 +29,17 @@ class RickRollInfo(models.Model):
         super().save(*args, **kwargs)   
         if self.image:
             img = Image.open(self.image.path)
+            img = ImageOps.exif_transpose(img)
 
-            if img.height > 630 or img.width > 1200:
-                output_size = (1200, 630)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
+            output_size = (1200, 630)
+            img = ImageOps.contain(img, output_size)
+            canvas = Image.new("RGB", (1200, 630), (24, 24, 24))
+            position = (
+                (1200 - img.width) // 2,
+                (630 - img.height) // 2,
+            )
+            canvas.paste(img, position)
+            canvas.save(self.image.path)
 
     def get_relative_url(self):
         return reverse('generated-url', args=[self.code])
