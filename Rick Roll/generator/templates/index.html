@@ -3,6 +3,26 @@
 {% load crispy_forms_tags %}
 {% block head %}
     <title>Custom Rick Roll Generator</title>
+    {% comment %} Meta tags {% endcomment %}
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Custom Rickroll Link Generator">
+    <meta name="description" content="Create custom disguised Rickroll links instantly. Disguise URLs with fake preview titles and custom thumbnails to prank your friends, free">
+    <meta name="keywords" content="rickroll link generator, fake link generator, disguise link, custom rick roll, prank link shortener">
+
+    <!-- Open Graph / Facebook / Discord Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beensauce.pythonanywhere.com/">
+    <meta property="og:title" content="Custom Rickroll Link Generator">
+    <meta property="og:description" content="Create custom disguised Rickroll links to instantly rick roll anyone">
+    <meta property="og:image" content="{% static 'images/Rick.jpg' %}">
+
+    <!-- Twitter Previews -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://beensauce.pythonanywhere.com/">
+    <meta name="twitter:title" content="Custom Rickroll Link Generator">
+    <meta name="twitter:description" content="Create custom disguised Rickroll links to instantly prank your friends">
+    <meta name="twitter:image" content="{% static 'images/Rick.jpg' %}">
+
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">    
     <script src="{% static 'js/index.js' %}" defer></script>
 {% endblock %}
