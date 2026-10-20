@@ -1,50 +1,26 @@
 // Make footer invisible until the user clicks a button
 document.querySelector('footer').classList.toggle('hidden');
-
+const playerDiv = document.getElementById('player');
 // Youtube API stuff
-let tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-let firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;
-function onYouTubeIframeAPIReady(){
-
-    // Responsive web developement
-    if (screen.width < 500){
-        player = new YT.Player('player', {
-            height: '207',
-            width: '340',
-            videoId: 'dQw4w9WgXcQ',
-            playerVars: {
-                'autoplay': 1,
-                'mute': 0,
-                'playsinline': 1,
-                'rel': 0,
-                'controls': 0,
-                'loop': 1,
-            },
-        });
+const videoPlayer = document.createElement('video');
+function makeVideo() {
+    const rickSource = document.createElement('source');
+    rickSource.src = "/static/video/Rick.mp4";
+    videoPlayer.appendChild(rickSource);
+    playerDiv.appendChild(videoPlayer);
+    videoPlayer.preload = 'auto';
+    
+    if (screen.width < 450){
+        videoPlayer.width = 320;
+        videoPlayer.height = 240;
     }
     else{
-        player = new YT.Player('player', {
-            height: '390',
-            width: '640',
-            videoId: 'dQw4w9WgXcQ',
-            playerVars: {
-                'autoplay': 1,
-                'mute': 0,
-                'playsinline': 1,
-                'rel': 0,
-                'controls': 0,
-                'loop': 1,
-            },
-        });
+        videoPlayer.width = 640;
+        videoPlayer.height = 390;
     }
+}
 
-    function onPlayerReady(event) {
-        event.target.playVideo();
-    }
-}  
+
 const troll = document.getElementById('troll');
 const btns = document.querySelectorAll('.button');
 const securityCheck = document.getElementById('security');
@@ -52,8 +28,13 @@ const footer = document.querySelector('footer');
 const content = document.getElementById('content');
 
 // Adding event listeners to all buttons, when one gets clicks, rick roll plays
-btns.forEach((btn) => btn.addEventListener('click', playVideo));
-
+btns.forEach((btn) => btn.addEventListener('click', () => {
+        const securityHeading = document.getElementById('security-check-heading');
+        securityHeading.textContent = 'Loading';
+        securityHeading.classList.toggle('fake-robot-text');
+        playVideo();
+    }
+));
 // Initial fake loading screen
 const fakeText = document.querySelector('.fake-robot-text');
 const securityCheckContainer = document.querySelector('.security-check-container');
