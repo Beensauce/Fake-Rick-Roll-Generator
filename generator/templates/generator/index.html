@@ -1,0 +1,5 @@
+{% for object in rick_roll_objects %}
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.description }}</p>
+    <img src="{{ object.image.url }}">
+{% endfor %}
