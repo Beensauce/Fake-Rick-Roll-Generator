@@ -54,7 +54,6 @@ def index(request):
 # Rick roll site
 def rickRoll(request, special_code):
     data = get_object_or_404(RickRollInfo, code=special_code)
-    data.views = data.views + 1
 
     context = {
         'data': data
