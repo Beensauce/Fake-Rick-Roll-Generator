@@ -1,0 +1,145 @@
+#content{
+  flex-direction: column;
+}
+
+.about-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.code-block-dark {
+  background-color: #2f363d;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+
+.large-div{
+  display: flex;
+  flex-direction: column;
+}
+
+/* Preview */
+#simulator{
+  background-color: #1F1F1F;
+  color: #ADADAD;
+  font-family: sans-serif, Arial, Helvetica;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.profile{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.5rem 0 0 0.5rem;
+}
+
+.msg-inside{
+  width: 75%;
+  height: 65%;
+  background-color: #292929;
+  margin-left: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.msg-inside .msg-text{
+  align-self: flex-start;
+  margin-left: 1rem;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.msg-core{
+  background-color: #242424;
+  width: 90%;
+  height: 65%;
+  display: flex;
+  flex-direction: row;
+}
+
+.information{
+  margin-left:1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+
+.title-core{
+  color:white;
+  font-weight: 600;
+  width: 90%;
+  margin-top: 0.5rem !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
+.description-core{
+  color: white;
+  font-size: 0.9rem;
+  margin-top: 0.5rem !important;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.text{
+  margin: 0;
+  padding: 0;
+}
+
+.link-core{
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-img{
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+}
+
+.thumbnail{
+  width: 30%;
+  height:auto;
+  border-radius: 0.5rem 0 0 0.5rem;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Contact and advice section */
+.contact{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (max-width: 816px) {
+  #content{
+    margin: 0 1rem;
+  }
+  iframe{
+    width: 340px;
+    height: 192px;
+  }
+}

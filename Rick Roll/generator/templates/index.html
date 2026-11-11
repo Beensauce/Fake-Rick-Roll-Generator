@@ -7,7 +7,7 @@
     <!-- Primary Meta Tags -->
     <meta name="title" content="Custom Rickroll Link Generator">
     <meta name="description" content="Create custom disguised Rickroll links instantly. Disguise URLs with fake preview titles and custom thumbnails to prank your friends, free">
-    <meta name="keywords" content="rickroll link generator, fake link generator, disguise link, custom rick roll, prank link shortener">
+    <meta name="keywords" content="rickroll link generator, custom rick roll generator, rick roll maker, fake link generator, disguise link, custom rick roll, prank link shortener">
 
     <!-- Open Graph / Facebook / Discord Previews -->
     <meta property="og:type" content="website">
@@ -23,12 +23,14 @@
     <meta name="twitter:description" content="Create custom disguised Rickroll links to instantly prank your friends">
     <meta name="twitter:image" content="{% static 'images/Rick.jpg' %}">
 
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">      
     <script src="{% static 'js/index.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
     <!-- Preview and form -->
+    {% include "navbar.html" %}
     <div id="top-content">
         <div id="form">
             <h1>Custom Rick Roll Generator</h1>

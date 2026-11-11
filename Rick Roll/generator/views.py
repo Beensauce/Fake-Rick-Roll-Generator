@@ -51,6 +51,9 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def about(request):
+    return render(request, 'about.html')
+
 # Rick roll site
 def rickRoll(request, special_code):
     data = get_object_or_404(RickRollInfo, code=special_code)

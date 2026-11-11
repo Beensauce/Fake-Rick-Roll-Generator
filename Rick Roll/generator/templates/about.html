@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>About Custom rick roll generator</title>
+    {% comment %} Meta tags {% endcomment %}
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="About custom Rickroll Link Generator">
+    <meta name="description" content="About the custom rick roll generator, how it works and how to make it yourself!">
+    <meta name="keywords" content="rickroll link generator, custom rick roll generator, rick roll maker, fake link generator, disguise link, custom rick roll, prank link shortener">
+
+    <!-- Open Graph / Facebook / Discord Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beensauce.pythonanywhere.com/about">
+    <meta property="og:title" content="About custom Rickroll Link Generator">
+    <meta property="og:description" content="About the custom rick roll generator, how it works and how to make it yourself!">
+    <meta property="og:image" content="{% static 'images/Rick.jpg' %}">
+
+    <!-- Twitter Previews -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://beensauce.pythonanywhere.com/about">
+    <meta name="twitter:title" content="About custom Rickroll Link Generator">
+    <meta name="twitter:description" content="About the custom rick roll generator, how it works and how to make it yourself!">
+    <meta name="twitter:image" content="{% static 'images/Rick.jpg' %}">
+
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">    
+{% endblock %}
+
+{% block content %}
+    {% include "navbar.html" %}
+    <div class="about-content">
+        <h1>How it works</h1>
+        <p>Based on your input, this would change the Rick Roll website's meta tags, which is what makes the social preview</p>
+        <h2>For example: </h2>
+        <div class="large-div">
+            <pre class="code-block-dark"><code>// Code in HTML
+                &lt;meta property="og:title" content="Beensauce says hi!"&gt;
+                &lt;meta property="og:description" content="Beensauce finally locks in and says hi!"&gt;
+                &lt;meta property="og:url" content="beensauce.pythonanywhere.com"&gt;
+                &lt;meta property="og:type" content="website"&gt;
+                &lt;meta property="og:image" content="beensauce.selfie"&gt;
+            </code></pre>
+            <div class="preview">
+                <h1 class="preview-text">Would make this!</h1>
+                <div id="simulator">
+                    <div class="profile">
+                        <img class="profile-img" src="{% static 'images/DaBao.jpg' %}" alt="Juicy cat">
+                        <p><b>Beensauce</b></p>
+                    </div>
+                    <div class="msg-inside">
+                        <p class="msg-text" style="color:#4e6ec1; text-decoration: underline;">beensauce.pythonanywhere.com</p>
+                        <div class="msg-core">
+                            <img id='image-core' class="thumbnail" src="{% static 'images/Beensauce.jpg' %}" alt="Beensauce profile pic">
+                            <div class="information">
+                                <p id='title-core' class="title-core text">Beensauce says hi!</p>
+                                <p id='description-core' class="description-core text">Beensauce finally locks in and says hi!</p>
+                                <p id='link-core' class="link-core text">beensauce.pythonanywhere.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1>If you want to learn more or create this website</h1>
+        <p>Follow my Youtube tutorial/channel <a href="https://www.youtube.com/@Beensauce" target="_blank">here!</a> </p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=5HjN0jxC7dacVM0B&amp;list=PLS5zQB3vS-KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="advice">
+            <h2>Contact</h2>
+            <p>If you got advice for me, how to make this website better, pls contact me. Always happy to learn :D</p>
+            <div class="contact">
+                <p><a href="mailto:daabob2.0@gmail.com">Send email to me</a></p>
+                <a href="https://github.com/Beensauce/Fake-Rick-Roll-Generator" target="_blank">Github</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
